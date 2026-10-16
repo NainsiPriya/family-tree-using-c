@@ -39,7 +39,7 @@ void read_person_info(const char *role, char *name_out, int *age_out)
 {
     char buf[100];
 
- /* Name */
+ 
     while (1) {
         printf("Enter name for %s (maximum 49 characters): ", role);
 
@@ -136,7 +136,80 @@ void read_person_info(const char *role, char *name_out, int *age_out)
       }
 }
 
+/*  Linking */
 
+void link_parents(Person *child, Person *father, Person *mother)
+{
+    child->father = father;
+    child->mother = mother;
+}
+
+/* Display */
+
+void print_family_relationships(const Person *me)
+{
+    printf("\n=== 1. FAMILY TREE RELATIONSHIPS ===\n\n"); 
+
+    if (me == NULL) {
+        printf("No information available.\n");
+        return;
+    }
+    
+    printf("1. YOURSELF:\n");
+    printf("   - Name: %s | Age: %d\n\n", me->name, me->age);
+
+    printf("2. PARENTS:\n");
+    printf("   - Father: %s | Age: %d\n", me->father->name, me->father->age);
+    printf("   - Mother: %s | Age: %d\n\n", me->mother->name, me->mother->age);
+
+    printf("3. PATERNAL GRANDPARENTS (via Father's Pointers):\n");
+    printf("   - Grandfather: %s | Age: %d\n",
+           me->father->father->name, me->father->father->age);
+    printf("   - Grandmother: %s | Age: %d\n\n",
+           me->father->mother->name, me->father->mother->age);
+
+    printf("4. MATERNAL GRANDPARENTS (via Mother's Pointers):\n");
+    printf("   - Grandfather: %s | Age: %d\n",
+           me->mother->father->name, me->mother->father->age);
+    printf("   - Grandmother: %s | Age: %d\n",
+           me->mother->mother->name, me->mother->mother->age);
+}
+
+/* Recursive helper: prints the parents of `p`, using `prefix` for indentation.
+ * level 0 -> p's parents are "Father"/"Mother"
+ * level 1+ -> they are "Grandfather"/"Grandmother" */
+static void print_branches(const Person *p, int level, const char *prefix)
+{
+    const char *fl = (level == 0) ? "Father" : "Grandfather";
+    const char *ml = (level == 0) ? "Mother" : "Grandmother";
+    char child_prefix[128];
+
+    if (p->father != NULL) {
+        const char *branch = (p->mother != NULL) ? "├── " : "└── ";
+        const char *cont   = (p->mother != NULL) ? "│    " : "     ";
+        printf("%s%s%s: %s (Age: %d)\n", prefix, branch, fl,
+               p->father->name, p->father->age);
+        snprintf(child_prefix, sizeof(child_prefix), "%s%s", prefix, cont);
+        print_branches(p->father, level + 1, child_prefix);
+    }
+    if (p->mother != NULL) {
+        printf("%s└── %s: %s (Age: %d)\n", prefix, ml,
+               p->mother->name, p->mother->age);
+        snprintf(child_prefix, sizeof(child_prefix), "%s     ", prefix);
+        print_branches(p->mother, level + 1, child_prefix);
+    }
+}
+
+void print_tree_visual(const Person *root, int level)
+{
+    if (root == NULL)
+        return;
+    if (level == 0)
+        printf("\n=== 2. VISUAL FAMILY TREE ===\n\n");
+    printf("%s (Age: %d)\n", root->name, root->age);
+    print_branches(root, level, "  ");
+}
+ 
 /*  main */
 
 int main(void)
@@ -150,6 +223,7 @@ int main(void)
     Person *people[TOTAL];
     char name[50];
     int age;
+    
 
     /* Step 1: collect input and create each person exactly once */
     for (int i = 0; i < TOTAL; i++) {
@@ -157,6 +231,16 @@ int main(void)
         people[i] = create_person(name, age);
         printf("\n");
     }
+
+    /* Step 2: wire pointers (grandparents keep NULL parents) */
+    link_parents(people[FATHER], people[PGF], people[PGM]);
+    link_parents(people[MOTHER], people[MGF], people[MGM]);
+    link_parents(people[ME],     people[FATHER], people[MOTHER]);
+
+    /* Step 3: output */
+    print_family_relationships(people[ME]);
+    print_tree_visual(people[ME], 0);
+
 
     return 0;
 }
