@@ -209,7 +209,17 @@ void print_tree_visual(const Person *root, int level)
     printf("%s (Age: %d)\n", root->name, root->age);
     print_branches(root, level, "  ");
 }
- 
+
+/* Cleanup  */
+
+void free_family_tree(Person *people[], int count)
+{
+    for (int i = 0; i < count; i++) {
+        free(people[i]);
+        people[i] = NULL;
+    }
+}
+
 /*  main */
 
 int main(void)
@@ -224,6 +234,20 @@ int main(void)
     char name[50];
     int age;
     
+    printf("\n========== INPUT RULES ==========\n\n");
+
+    printf("\n1. NAME RULES:\n");
+    printf("   - Name cannot be empty.\n");
+    printf("   - Only English letters and spaces are allowed.\n");
+    printf("   - Maximum name length: 49 characters.\n");
+    printf("\n2. AGE RULES:\n");
+    printf("   - Grandparents, Father and Mother: 18 to 150.\n");
+    printf("   - Yourself: 0 to 150.\n");
+    printf("   - Enter whole numbers only.\n");
+    printf("   - Letters, decimals and negative ages are not allowed.\n");
+
+    printf("\n=================================\n\n");
+
 
     /* Step 1: collect input and create each person exactly once */
     for (int i = 0; i < TOTAL; i++) {
@@ -241,6 +265,7 @@ int main(void)
     print_family_relationships(people[ME]);
     print_tree_visual(people[ME], 0);
 
-
+    /* Step 4: cleanup */
+    free_family_tree(people, TOTAL);
     return 0;
 }
