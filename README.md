@@ -69,7 +69,10 @@ valgrind
 Checked the Valgrind report to verify whether any memory leaks or errors are present.
 
 ## 7. Program Execution Screenshot
+1. Execution : The screenshots below are given to show the running program.  
+![Program Execution]()
 
+2. Memory leak testing : The screenshot below gives the output after running valgrind command for memory leak testing. 
 
 ## 8. Development history
 
