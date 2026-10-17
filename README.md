@@ -70,9 +70,18 @@ Checked the Valgrind report to verify whether any memory leaks or errors are pre
 
 ## 7. Program Execution Screenshot
 1. Execution : The screenshots below are given to show the running program.  
-![Program Execution]()
+
+![Program Execution](programWorking2main.png)  
+Image 1 : running program prints the standard fmaily output and diagramatic family tree
+
+![Program Execution](programWorkin1.png)
+Image 2 : rules being followed in the program 
 
 2. Memory leak testing : The screenshot below gives the output after running valgrind command for memory leak testing. 
+
+![Program Execution](valgrind-Copy.png )
+Image 3 : valgrind memory leak testing 
+
 
 ## 8. Development history
 
