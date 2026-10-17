@@ -62,38 +62,35 @@ Follow the prompts to enter the names and ages of all seven family members.
 
  Valgrind command was run in the termide inside ssh terminal to check for memory leaks and memory errors:
 
-```bash
-valgrind 
+Checked the Valgrind report to verify whether any memory leaks or errors are present(also in screenshot ). 
 
-
-Checked the Valgrind report to verify whether any memory leaks or errors are present.
 
 ## 7. Program Execution Screenshot
-1. Execution : The screenshots below are given to show the running program.  
+ 1. Execution : The screenshots below are given to show the running program.  
 
-![Program Execution](programWorking2main.png)  
-Image 1 : running program prints the standard fmaily output and diagramatic family tree
+ ![Program Execution](programWorking2main.png)  
+ Image 1 : running program prints the standard fmaily output and diagramatic family  tree
 
-![Program Execution](programWorkin1.png)
-Image 2 : rules being followed in the program 
+ ![Program Execution](programWorkin1.png)
+ Image 2 : rules being followed in the program 
 
-2. Memory leak testing : The screenshot below gives the output after running valgrind command for memory leak testing. 
+ 2. Memory leak testing : The screenshot below gives the output after running  valgrind command for memory leak testing. 
 
-![Program Execution](valgrind-Copy.png )
-Image 3 : valgrind memory leak testing 
+ ![Program Execution](valgrind-Copy.png )
+ Image 3 : valgrind memory leak testing 
 
 
 ## 8. Development history
 
-The project was built in four stages, each committed separately:
+ The project was built in four stages, each committed separately:
 
-1. feat: add Person struct and create_person allocation helper
-2. feat: collect input for all 7 family members
-3. feat: link parent pointers and implement relationship print
-4. fix: add memory cleanup with free and polish output
+ 1. feat: add Person struct and create_person allocation helper
+ 2. feat: collect input for all 7 family members
+ 3. feat: link parent pointers and implement relationship print
+ 4. fix: add memory cleanup with free and polish output
 
 ## 9. Author
 
-**Nainsi Priya**
+ **Nainsi Priya**
 
 
